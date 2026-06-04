@@ -1,0 +1,98 @@
+---
+aid: university-of-bern
+name: University of Bern
+description: >-
+  The University of Bern (Universität Bern), founded in 1834, is a comprehensive
+  public research university in the Swiss capital with around 16,000 students
+  across eight faculties, ranked #91 in the QS World University Rankings 2025.
+  Its public, machine-readable footprint centers on BORIS Portal, the
+  institutional repository and research information system, which runs DSpace
+  7.6.1 and exposes both a REST API and an OAI-PMH endpoint. The University
+  Library also publishes guidance on data-mining APIs and maintains open-source
+  tools on GitHub. There is no single unified, self-service developer portal;
+  administrative, course, and identity systems are gated behind institutional
+  affiliation and Swiss federated identity (SWITCH edu-ID / Shibboleth).
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-bern/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Switzerland
+  - Research
+  - Open Access
+  - Institutional Repository
+  - Library
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-bern:boris-rest
+    name: BORIS Portal DSpace REST API
+    description: >-
+      BORIS Portal is the institutional repository and research information
+      system of the University of Bern, running DSpace 7.6.1 with the DSpace-CRIS
+      extension. Its REST API (HAL/JSON) exposes communities, collections, items,
+      bitstreams, and research-entity metadata for publications, research data,
+      projects, and researchers. Confirmed live returning HTTP 200.
+    humanURL: https://boris-portal.unibe.ch/
+    baseURL: https://boris-portal.unibe.ch/server/api
+    tags: [ Repository, Research, Open Access, DSpace, REST, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+      - type: BaseURL
+        url: https://boris-portal.unibe.ch/server/api
+  - aid: university-of-bern:boris-oai
+    name: BORIS Portal OAI-PMH Endpoint
+    description: >-
+      OAI-PMH 2.0 harvesting endpoint for BORIS Portal, allowing metadata
+      harvesting of the University of Bern's research outputs. Confirmed live
+      (verb=Identify returns repository name "BORIS Portal", protocol version
+      2.0, earliest datestamp 2021-08-26).
+    humanURL: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+    baseURL: https://boris-portal.unibe.ch/server/oai/request
+    tags: [ Repository, OAI-PMH, Harvesting, Metadata, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+      - type: BaseURL
+        url: https://boris-portal.unibe.ch/server/oai/request
+  - aid: university-of-bern:library-tdm-apis
+    name: University Library Data-Mining APIs Guide
+    description: >-
+      The University of Bern Library publishes curated guidance on
+      Application Programming Interfaces for text and data mining, covering
+      freely accessible and licensed third-party data services (OpenAlex,
+      CrossRef, OAI-PMH, IIIF, SRU and others). This is documentation/guidance
+      maintained by the library rather than a University-of-Bern-operated API;
+      access to licensed sources may require an individual API key and
+      institutional affiliation.
+    humanURL: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+    tags: [ Library, Documentation, Text and Data Mining, OAI-PMH, IIIF ]
+    properties:
+      - type: Documentation
+        url: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+common:
+  - type: Website
+    url: https://www.unibe.ch/index_eng.html
+  - type: GitHub
+    url: https://github.com/id-unibe-ch
+  - type: SourceCode
+    url: https://github.com/ub-unibe-ch
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-bern/
+  - type: Plans
+    url: plans/university-of-bern-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-bern-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-bern-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

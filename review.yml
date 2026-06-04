@@ -1,0 +1,47 @@
+---
+name: University of Bern
+description: University of Bern public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-bern/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Verified live, non-fabricated. The University of Bern has no single unified
+      self-service developer portal. The strongest confirmed machine-readable
+      footprint is BORIS Portal, the institutional repository running DSpace 7.6.1:
+      both its DSpace REST API (/server/api) and OAI-PMH endpoint (/server/oai/request,
+      verb=Identify confirms repository "BORIS Portal", protocol 2.0) return HTTP 200.
+      The University Library publishes a curated APIs/data-mining guide (200) but that
+      page documents third-party services rather than University-of-Bern-operated APIs.
+      Two official GitHub orgs exist (id-unibe-ch IT-Services, ub-unibe-ch University
+      Library). Course/SIS (KSL) and identity systems are gated behind institutional
+      affiliation and Swiss federated identity (SWITCH edu-ID / Shibboleth) and were not
+      probed as public APIs. The IWI Open Data Show Room did not resolve at review time.
+      No endpoints invented.
+    endpoints:
+      - url: https://boris-portal.unibe.ch/server/api
+        status: 200
+        note: BORIS Portal DSpace 7.6.1 REST API root; returns HAL/JSON with dspaceVersion.
+      - url: https://boris-portal.unibe.ch/server/oai/request?verb=Identify
+        status: 200
+        note: OAI-PMH 2.0 Identify; repository name "BORIS Portal", earliest 2021-08-26.
+      - url: https://boris-portal.unibe.ch/
+        status: 200
+        note: BORIS Portal institutional repository / research information system UI.
+      - url: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+        status: 200
+        note: Library guide to data-mining APIs (documents third-party services).
+      - url: https://www.unibe.ch/index_eng.html
+        status: 200
+        note: Official University of Bern website.
+      - url: https://github.com/id-unibe-ch
+        status: 200
+        note: Official IT-Services GitHub org (~32 repos, infra/Ansible/Helm).
+      - url: https://github.com/ub-unibe-ch
+        status: 200
+        note: Official University Library GitHub org (~13 repos, IIIF viewer, tools).
+      - url: https://opendata.iwi.unibe.ch/
+        status: 0
+        note: IWI Open Data Show Room did not resolve (timeout) at review time.
