@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "unibe": "https://www.unibe.ch/ns#",
+    "dspace": "https://boris-portal.unibe.ch/ns#",
+    "name": "name",
+    "url": "url",
+    "description": "description",
+    "foundingDate": "foundingDate",
+    "location": "location",
+    "sameAs": "sameAs",
+    "department": "department",
+    "publishingPrinciples": "publishingPrinciples",
+    "api": {
+      "@id": "unibe:api",
+      "@container": "@set"
+    },
+    "baseURL": {
+      "@id": "unibe:baseURL",
+      "@type": "@id"
+    },
+    "humanURL": {
+      "@id": "unibe:humanURL",
+      "@type": "@id"
+    },
+    "repository": {
+      "@id": "dspace:repository",
+      "@type": "@id"
+    },
+    "community": "dspace:community",
+    "collection": "dspace:collection",
+    "item": "dspace:item",
+    "bitstream": "dspace:bitstream",
+    "handle": "dspace:handle",
+    "oaiEndpoint": {
+      "@id": "dspace:oaiEndpoint",
+      "@type": "@id"
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.unibe.ch/",
+  "name": "University of Bern",
+  "alternateName": "Universität Bern",
+  "url": "https://www.unibe.ch/index_eng.html",
+  "foundingDate": "1834",
+  "description": "Comprehensive public research university in Bern, Switzerland, with around 16,000 students across eight faculties. Its public, machine-readable footprint centers on BORIS Portal, the institutional repository running DSpace 7.6.1 with a REST API and an OAI-PMH endpoint.",
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bern",
+      "addressCountry": "CH"
+    }
+  },
+  "sameAs": [
+    "https://www.linkedin.com/school/university-of-bern/",
+    "https://github.com/id-unibe-ch",
+    "https://github.com/ub-unibe-ch"
+  ],
+  "department": {
+    "@type": "Organization",
+    "name": "University Library of Bern (Universitätsbibliothek Bern)",
+    "url": "https://www.ub.unibe.ch/index_eng.html"
+  },
+  "api": [
+    {
+      "@type": "WebAPI",
+      "name": "BORIS Portal DSpace REST API",
+      "description": "DSpace 7.6.1 HAL/JSON REST API exposing communities, collections, items, bitstreams, and research-entity metadata.",
+      "humanURL": "https://boris-portal.unibe.ch/",
+      "baseURL": "https://boris-portal.unibe.ch/server/api",
+      "documentation": "https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "BORIS Portal OAI-PMH Endpoint",
+      "description": "OAI-PMH 2.0 metadata harvesting endpoint for the University of Bern's research outputs.",
+      "humanURL": "https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html",
+      "oaiEndpoint": "https://boris-portal.unibe.ch/server/oai/request"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "University Library Data-Mining APIs Guide",
+      "description": "Curated library guidance on third-party text and data mining APIs (OpenAlex, CrossRef, OAI-PMH, IIIF, SRU and others).",
+      "humanURL": "https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html",
+      "documentation": "https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html"
+    }
+  ]
+}
