@@ -77,6 +77,10 @@ apis:
       - type: Documentation
         url: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
 common:
+  - type: VulnerabilityDisclosure
+    url: security/university-of-bern-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/university-of-bern-domain-security.yml
   - type: Website
     url: https://www.unibe.ch/index_eng.html
   - type: GitHub
