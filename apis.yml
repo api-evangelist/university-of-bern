@@ -13,6 +13,17 @@ description: >-
   administrative, course, and identity systems are gated behind institutional
   affiliation and Swiss federated identity (SWITCH edu-ID / Shibboleth).
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: unknown
