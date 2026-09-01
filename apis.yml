@@ -1,117 +1,364 @@
 ---
 aid: university-of-bern
 name: University of Bern
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Bern (Universität Bern), founded in 1834, is a comprehensive
-  public research university in the Swiss capital with around 16,000 students
-  across eight faculties, ranked #91 in the QS World University Rankings 2025.
-  Its public, machine-readable footprint centers on BORIS Portal, the
-  institutional repository and research information system, which runs DSpace
-  7.6.1 and exposes both a REST API and an OAI-PMH endpoint. The University
-  Library also publishes guidance on data-mining APIs and maintains open-source
-  tools on GitHub. There is no single unified, self-service developer portal;
-  administrative, course, and identity systems are gated behind institutional
-  affiliation and Swiss federated identity (SWITCH edu-ID / Shibboleth).
+  The University of Bern (Universität Bern), founded in 1834, is a comprehensive public
+  research university in the Swiss capital with around 16,000 students across eight
+  faculties. It is a federation of buyers rather than an API producer: it operates no
+  developer portal, publishes no OpenAPI, AsyncAPI, JSON Schema, apis.json, llms.txt or
+  agent card on any host it controls, and offers no self-service API onboarding of any
+  kind. What it does operate is protocol- and identity-shaped. Two OAI-PMH 2.0 harvesting
+  endpoints run on its own hosts — BORIS Portal, the institutional repository and CRIS on
+  DSpace, and BOP Serials, the Bern Open Publishing OJS platform — and both answered
+  verb=Identify live. The University Library publishes an Upptime status page whose
+  per-service JSON is the only genuinely open, machine-readable HTTP API in this profile.
+  The university runs its own Shibboleth Identity Provider inside the SWITCHaai federation
+  (entityID https://aai-idp.unibe.ch/idp/shibboleth, scope unibe.ch, 52 service providers),
+  and it is a direct DataCite member (symbol UNIBE) with five registered repositories.
+  Everything transactional is closed: BORIS Portal's DSpace REST API is not merely
+  authenticated but deliberately suspended for the public — the whole host answers every
+  anonymous request with a "Temporary Access Restriction" page citing automated-traffic
+  volume and allowing only the University of Bern network, the Inselspital network and
+  university VPN — and the OJS REST API returns api.403.unauthorized. Library discovery
+  runs on a vendor platform under a Bern-specific tenant view (swisscovery / Ex Libris
+  Primo VE), and the course system KSL sits behind SWITCH AAI. The library's much-linked
+  "APIs" page is a curated guide to OTHER organizations' APIs (OpenAlex, Crossref, Scopus,
+  Elsevier, IEEE), not to anything Bern operates.
 type: Index
 deliveryModel:
   model: saas
   open_source: false
-  commercial: true
-  callable_host: false
-  label: Hosted service · you call their endpoint
-  confidence: medium
+  commercial: false
+  callable_host: true
+  label: Institution-operated endpoints · harvesting protocols only
+  confidence: high
   source:
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
   try_now: false
   public: false
-  label: Free
-  confidence: medium
+  label: Free · no onboarding path · REST surfaces closed to the public
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-bern.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-bern/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Switzerland
+  - Public Research University
   - Research
+  - Open Science
   - Open Access
   - Institutional Repository
   - Library
+  - OAI-PMH
+  - Identity Federation
+  - Shibboleth
+  - Research Computing
+  - Scholarly Publishing
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
+x-coverage:
+  state: gated
+  reason: auth_required
+  detail: >-
+    Bern's open surfaces are harvesting protocols and registry memberships; every REST
+    surface it operates is closed to anonymous callers. BORIS Portal (boris-portal.unibe.ch)
+    serves a soft-200 "Temporary Access Restriction" HTML page to the entire public — root
+    and /server/api alike — stating that access "is currently granted exclusively to" the
+    University of Bern network, the Inselspital network and university VPN connections, and
+    boristheses.unibe.ch serves the same page. Only /server/oai/request is exempted, and it
+    returns real OAI-PMH XML. The Bern Open Publishing OJS REST API answers
+    api.403.unauthorized without a token. There is no developer portal, no OpenAPI, and
+    no llms.txt anywhere on a unibe.ch host. This is a correct thin profile, not a failed
+    crawl: the surfaces were reached, read, and are genuinely closed.
+  evidence:
+  - url: https://boris-portal.unibe.ch/server/oai/request?verb=Identify
+    status: 200
+  - url: https://boris-portal.unibe.ch/server/api
+    status: 200
+  - url: https://boris-portal.unibe.ch/
+    status: 200
+  - url: https://bop.unibe.ch/index.php/index/oai?verb=Identify
+    status: 200
+  - url: https://bop.unibe.ch/index.php/index/api/v1/contexts
+    status: 403
+  - url: https://www.unibe.ch/llms.txt
+    status: 404
+  - url: https://www.unibe.ch/sitemap.xml
+    status: 500
+  - url: https://www.unibe.ch/.well-known/security.txt
+    status: 200
+  - url: https://opendata.iwi.unibe.ch/
+    status: 0
+  checked: '2026-09-01'
 apis:
-  - aid: university-of-bern:boris-rest
-    name: BORIS Portal DSpace REST API
-    description: >-
-      BORIS Portal is the institutional repository and research information
-      system of the University of Bern, running DSpace 7.6.1 with the DSpace-CRIS
-      extension. Its REST API (HAL/JSON) exposes communities, collections, items,
-      bitstreams, and research-entity metadata for publications, research data,
-      projects, and researchers. Confirmed live returning HTTP 200.
-    humanURL: https://boris-portal.unibe.ch/
-    baseURL: https://boris-portal.unibe.ch/server/api
-    tags: [ Repository, Research, Open Access, DSpace, REST, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
-      - type: BaseURL
-        url: https://boris-portal.unibe.ch/server/api
   - aid: university-of-bern:boris-oai
     name: BORIS Portal OAI-PMH Endpoint
+    x-operator: institution
     description: >-
-      OAI-PMH 2.0 harvesting endpoint for BORIS Portal, allowing metadata
-      harvesting of the University of Bern's research outputs. Confirmed live
-      (verb=Identify returns repository name "BORIS Portal", protocol version
-      2.0, earliest datestamp 2021-08-26).
+      OAI-PMH 2.0 metadata-harvesting endpoint for BORIS Portal, the University of Bern's
+      institutional repository and current research information system. Runs on a
+      Bern-operated host under the university's own registrable domain. Verified live
+      2026-09-01: verb=Identify returns repositoryName "BORIS Portal", protocolVersion 2.0,
+      adminEmail borisportal@unibe.ch, earliestDatestamp 2026-08-10T07:16:15Z, granularity
+      YYYY-MM-DDThh:mm:ssZ, deletedRecord transient; verb=ListMetadataFormats also answers.
+      This path is the ONE exception to the access restriction currently applied to the
+      whole boris-portal.unibe.ch host. The OAI-PMH protocol is OAI's, not Bern's — the
+      deployment and the metadata are Bern's.
     humanURL: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
     baseURL: https://boris-portal.unibe.ch/server/oai/request
-    tags: [ Repository, OAI-PMH, Harvesting, Metadata, Open Access ]
+    tags: [ OAI-PMH, Harvesting, Metadata, Repository, Open Access, Research ]
     properties:
       - type: Documentation
         url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
       - type: BaseURL
         url: https://boris-portal.unibe.ch/server/oai/request
-  - aid: university-of-bern:library-tdm-apis
-    name: University Library Data-Mining APIs Guide
+  - aid: university-of-bern:boris-rest
+    name: BORIS Portal DSpace REST API (public access suspended)
+    x-operator: institution
     description: >-
-      The University of Bern Library publishes curated guidance on
-      Application Programming Interfaces for text and data mining, covering
-      freely accessible and licensed third-party data services (OpenAlex,
-      CrossRef, OAI-PMH, IIIF, SRU and others). This is documentation/guidance
-      maintained by the library rather than a University-of-Bern-operated API;
-      access to licensed sources may require an individual API key and
-      institutional affiliation.
-    humanURL: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
-    tags: [ Library, Documentation, Text and Data Mining, OAI-PMH, IIIF ]
+      BORIS Portal runs DSpace with the DSpace-CRIS extension and, by design, exposes a
+      HAL/JSON REST API at /server/api covering communities, collections, items, bitstreams
+      and CRIS research entities. It is NOT publicly callable. As of 2026-09-01 every
+      anonymous request to boris-portal.unibe.ch — the site root, /server/api and
+      /server/api/core/communities alike — returns HTTP 200 carrying a 2,920-byte
+      "Temporary Access Restriction" HTML page: "Due to an exceptionally high volume of
+      automated traffic, public access to boris-portal has been temporarily suspended...
+      Access is currently granted exclusively to the following networks: University of Bern
+      Network, Inselspital Network, University VPN Connections." An Accept: application/json
+      request gets the same HTML. The previous profile recorded this surface as "confirmed
+      live returning HTTP 200" — that was a soft-200 false credit and is corrected here. The
+      REST contract itself is DSpace's, not Bern-authored; no spec is saved to this repo.
+    humanURL: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+    baseURL: https://boris-portal.unibe.ch/server/api
+    tags: [ DSpace, Repository, REST, Research, Access Restricted, CRIS ]
     properties:
       - type: Documentation
-        url: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+        url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+      - type: BaseURL
+        url: https://boris-portal.unibe.ch/server/api
+  - aid: university-of-bern:bop-oai
+    name: Bern Open Publishing (BOP Serials) OAI-PMH Endpoint
+    x-operator: institution
+    description: >-
+      OAI-PMH 2.0 endpoint for Bern Open Publishing, the University Library's diamond
+      open-access journal platform, self-hosted on bop.unibe.ch on Open Journal Systems
+      3.4.0.6. Verified live 2026-09-01: repositoryName "BOP Serials", protocolVersion 2.0,
+      adminEmail bop-admin@ub.unibe.ch, earliestDatestamp 2015-08-25T12:26:22Z,
+      deletedRecord persistent. Registered with DataCite as repository unibe.bop-serials.
+      OJS is PKP's open-source software; the deployment, the host and the content are the
+      University Library's.
+    humanURL: https://bop.unibe.ch/
+    baseURL: https://bop.unibe.ch/index.php/index/oai
+    tags: [ OAI-PMH, Open Journal Systems, Scholarly Publishing, Open Access, Harvesting ]
+    properties:
+      - type: Documentation
+        url: https://bop.unibe.ch/
+      - type: BaseURL
+        url: https://bop.unibe.ch/index.php/index/oai
+  - aid: university-of-bern:bop-rest
+    name: Bern Open Publishing OJS REST API (token required)
+    x-operator: institution
+    description: >-
+      The Open Journal Systems REST API v1 on the University Library's Bern Open Publishing
+      platform. Present and responding, but closed: an anonymous GET of
+      /index.php/index/api/v1/contexts returns HTTP 403
+      {"error":"api.403.unauthorized","errorMessage":"You are not authorized to access the
+      requested resource."} — an authenticated, real API response rather than a wall, which
+      is why it is recorded. The API root /index.php/index/api/v1 itself returns 404 and per-journal paths
+      (/index.php/BOP/api/v1/contexts) 404, so the baseURL below names the verified collection
+      endpoint. Access
+      requires an OJS API token issued by the library; there is no public onboarding path
+      and no published specification. The contract is PKP's OJS API, not Bern-authored.
+    humanURL: https://bop.unibe.ch/
+    baseURL: https://bop.unibe.ch/index.php/index/api/v1/contexts
+    tags: [ Open Journal Systems, REST, Scholarly Publishing, Authenticated ]
+    properties:
+      - type: BaseURL
+        url: https://bop.unibe.ch/index.php/index/api/v1/contexts
+  - aid: university-of-bern:ub-services-status
+    name: University Library Public Services Status API
+    x-operator: institution
+    description: >-
+      The University Library of Bern runs an Upptime uptime monitor over the 15 public
+      applications it operates, publishing a live status site plus per-service JSON
+      endpoints (uptime.json, response-time.json in the Shields.io endpoint shape) and a
+      commit-log history (the api/ path itself is a directory, so the baseURL below names a
+      verified per-service endpoint rather than an index). Authored and operated by the library's own GitHub organization
+      ub-unibe-ch — a code host is not a vendor and the .upptimerc.yml, theme, logo and
+      monitored-service list are all Bern's. Verified live 2026-09-01: the status site
+      returns 200 and api/iiif-server/uptime.json returns
+      {"schemaVersion":1,"label":"uptime","message":"99.93%","color":"brightgreen"}. This
+      is the only fully open, machine-readable HTTP API in this profile. The monitored set
+      names further Bern-operated services: Agenda, Berner Ortsgeschichten, BERNHIST,
+      Biblio, Billing, Collection Ryhiner, DigiBern, IIIF Server, Literapedia Bern, MetaEQ,
+      PHBern Teacher, Research Databases, Room Reservation, URN Resolver and the ZMS
+      publication list.
+    humanURL: https://ub-unibe-ch.github.io/ub-public-services-status/
+    baseURL: https://raw.githubusercontent.com/ub-unibe-ch/ub-public-services-status/master/api/iiif-server/uptime.json
+    tags: [ Status, Uptime, Monitoring, Library, JSON, Upptime ]
+    properties:
+      - type: Documentation
+        url: https://github.com/ub-unibe-ch/ub-public-services-status
+      - type: BaseURL
+        url: https://raw.githubusercontent.com/ub-unibe-ch/ub-public-services-status/master/api/iiif-server/uptime.json
+      - type: SourceCode
+        url: https://github.com/ub-unibe-ch/ub-public-services-status
+  - aid: university-of-bern:ub-iiif
+    name: University Library IIIF Image Server
+    x-operator: institution
+    description: >-
+      A IIIF server operated by the University Library of Bern at iiif.ub.unibe.ch, serving
+      images for its digitized collections (Collection Ryhiner, DigiBern, Berner
+      Ortsgeschichten and others) and monitored on the library's own status page at 99.93%
+      uptime. Verified live 2026-09-01 (200, "IIIF Server", Symfony application). Recorded
+      with an honest limit: the public entry point is a management console requiring
+      sign-in, and no IIIF Presentation manifest or Image API info.json could be resolved
+      without an object identifier, so the IIIF API level and version are NOT asserted here.
+    humanURL: https://iiif.ub.unibe.ch/
+    baseURL: https://iiif.ub.unibe.ch/
+    tags: [ IIIF, Images, Digital Collections, Library, Cultural Heritage ]
+    properties:
+      - type: Documentation
+        url: https://www.ub.unibe.ch/services/digital_scholarship/index_eng.html
+      - type: BaseURL
+        url: https://iiif.ub.unibe.ch/
+  - aid: university-of-bern:switchaai-idp
+    name: SWITCHaai Identity Federation — University of Bern IdP
+    x-operator: federation
+    description: >-
+      The University of Bern operates its own SAML 2.0 / Shibboleth Identity Provider,
+      published as machine-readable metadata in the SWITCHaai federation aggregate (the
+      Swiss national research-and-education identity federation, part of eduGAIN). entityID
+      https://aai-idp.unibe.ch/idp/shibboleth, mdui:DisplayName "Universität Bern",
+      shibmd:Scope unibe.ch; SSO is delegated to SWITCH edu-ID at unibe.login.eduid.ch over
+      the HTTP-Redirect and HTTP-POST SAML 2.0 bindings. Verified 2026-09-01 against the
+      21.3 MB aggregate (1,957 EntityDescriptors): 53 entityIDs sit under unibe.ch — one
+      IdP and 52 service providers, including boris-portal.unibe.ch, boristheses.unibe.ch,
+      exam.unibe.ch, the KSL course-system SPs and the ADFS trust at fs.campus.unibe.ch.
+      Observed in the wild: https://www.ksl.unibe.ch/ redirects anonymous callers to the
+      SWITCH WAYF carrying entityID=https://id-kslprod2.id-sys.unibe.ch/shibboleth. A
+      federation is shared by definition; the IdP entity, its scope and its 52 SPs are
+      Bern's. The federation's own metadata contract belongs to SWITCH and is not saved here.
+    humanURL: https://www.switch.ch/aai/
+    baseURL: https://metadata.aai.switch.ch/metadata.switchaai.xml
+    tags: [ Identity Federation, Shibboleth, SAML, SWITCHaai, eduGAIN, Single Sign-On ]
+    properties:
+      - type: Documentation
+        url: https://www.switch.ch/aai/
+      - type: BaseURL
+        url: https://metadata.aai.switch.ch/metadata.switchaai.xml
+  - aid: university-of-bern:datacite-member
+    name: DataCite Membership — University of Bern (UNIBE)
+    x-operator: registry
+    description: >-
+      The University of Bern is a DataCite direct member, registering DOIs for its research
+      outputs. Verified 2026-09-01 at https://api.datacite.org/providers/unibe (200):
+      symbol UNIBE, memberType direct_member, organizationType academicInstitution, country
+      CH, member since 2020-04-06, rorId https://ror.org/02k7v4d05. Five repositories are
+      registered under the membership: unibe.boris-portal ("Open Access CRIS of the
+      University of Bern"), unibe.bop-serials (Bern Open Publishing), unibe.cssl (Corpus of
+      Stamp Seals from the Southern Levant), unibe.dhkg (digitale Historisch-kritische
+      Gesamtausgabe Jeremias Gotthelf) and unibe.repo-phbern. This is a MEMBERSHIP — a fact
+      about Bern — not a Bern-operated API; DataCite's contract is DataCite's.
+    humanURL: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+    baseURL: https://api.datacite.org/providers/unibe
+    tags: [ DataCite, DOI, Persistent Identifiers, Registry, Research Data ]
+    properties:
+      - type: BaseURL
+        url: https://api.datacite.org/providers/unibe
+  - aid: university-of-bern:ror-record
+    name: ROR Registry Record — University of Bern
+    x-operator: registry
+    description: >-
+      The University of Bern's Research Organization Registry identifier,
+      https://ror.org/02k7v4d05, verified live 2026-09-01. Domain unibe.ch, established
+      1834, located in Bern, Switzerland; cross-referenced to GRID grid.5734.5, ISNI
+      0000 0001 0726 5157, Wikidata Q659080 and six Crossref Funder IDs. This identifier is
+      what binds Bern's DataCite membership and its repository records together. A registry
+      record the institution is REGISTERED IN, not a contract it operates.
+    humanURL: https://ror.org/02k7v4d05
+    baseURL: https://api.ror.org/organizations/02k7v4d05
+    tags: [ ROR, Persistent Identifiers, Registry, Research Organization ]
+    properties:
+      - type: BaseURL
+        url: https://api.ror.org/organizations/02k7v4d05
+  - aid: university-of-bern:swisscovery-tenant
+    name: swisscovery — University Library of Bern tenant view
+    x-operator: tenant
+    description: >-
+      Library discovery for the University of Bern runs on swisscovery, the Swiss Library
+      Service Platform's shared Ex Libris Alma / Primo VE installation. Bern has an
+      institution-specific tenant view at https://ubbern.swisscovery.slsp.ch (verified
+      2026-09-01: 200, redirects to /discovery/search?vid=41SLSP_UBE:UBE, Primo VE
+      application), and DNS confirms the tenancy — ubbern.swisscovery.slsp.ch CNAMEs to
+      slsp-ube.primo.exlibrisgroup.com then eu03.primo.exlibrisgroup.com. The collection,
+      the holdings and the tenant view are Bern's; the platform, the API and the contract
+      are Ex Libris's, so NO Ex Libris specification is saved under this institution. The
+      relationship is recorded because it is a real institutional fact and one of the few
+      programmable library surfaces Bern has.
+    humanURL: https://ubbern.swisscovery.slsp.ch
+    tags: [ Library, Discovery, Ex Libris, Primo, Alma, SLSP, Tenant ]
+    properties:
+      - type: Website
+        url: https://ubbern.swisscovery.slsp.ch
 common:
+  - type: Website
+    url: https://www.unibe.ch/index_eng.html
+  - type: Documentation
+    url: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+  - type: ResearchRepository
+    url: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html
+  - type: LibraryCatalog
+    url: https://ubbern.swisscovery.slsp.ch
+  - type: CourseCatalog
+    url: https://www.unibe.ch/studies/student_starter_kit/tools/cts/index_eng.html
+  - type: IdentityFederation
+    url: https://metadata.aai.switch.ch/metadata.switchaai.xml
+  - type: ResearchComputing
+    url: https://hpc-unibe-ch.github.io/
+  - type: AIPolicy
+    url: https://www.unibe.ch/universitaet/organisation/leitung_und_zentralbereich/vizerektorat_lehre/startseite_vizerektorat_lehre/faq_zur_verwendung_von_ki_gestuetzten_hilfsmitteln_in_der_lehre__vizerektorat_lehre_universitaet_bern/index_ger.html
+  - type: AITooling
+    url: https://www.ub.unibe.ch/service/ki_im_wissenschaftlichen_arbeiten/index_ger.html
+  - type: Status
+    url: https://ub-unibe-ch.github.io/ub-public-services-status/
+  - type: GitHubOrganization
+    url: https://github.com/id-unibe-ch
+  - type: SourceCode
+    url: https://github.com/ub-unibe-ch
+  - type: GitHub
+    url: https://github.com/hpc-unibe-ch
+  - type: Support
+    url: https://www.ub.unibe.ch/about_us/contacts/index_eng.html
+  - type: TermsOfService
+    url: https://www.unibe.ch/legal_notice/index_eng.html
+  - type: Blog
+    url: https://www.unibe.ch/news/index_eng.html
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-bern/
+  - type: Conformance
+    url: conformance/university-of-bern-conformance.yml
   - type: VulnerabilityDisclosure
     url: security/university-of-bern-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/university-of-bern-domain-security.yml
-  - type: Website
-    url: https://www.unibe.ch/index_eng.html
-  - type: GitHub
-    url: https://github.com/id-unibe-ch
-  - type: SourceCode
-    url: https://github.com/ub-unibe-ch
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/university-of-bern/
   - type: Plans
     url: plans/university-of-bern-plans-pricing.yml
   - type: RateLimits
