@@ -1,0 +1,109 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes of University-of-Bern-operated hosts on 2026-09-01, plus the SWITCHaai
+  federation metadata aggregate and the DataCite / ROR member records. No OpenAPI or
+  other machine-readable contract is published by the University of Bern, so every
+  conformance claim below is evidenced by a probed response, never by a spec document.
+docs: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+note: >-
+  Scored against the Kin Score `education` regime standards[]. Only standards with a
+  fetched, quotable response are marked conforms: true. Bern publishes no OpenAPI,
+  AsyncAPI, JSON Schema, apis.json, llms.txt or agent card on any host it operates, and
+  the two REST surfaces it does run (DSpace and OJS) are both closed to anonymous
+  callers, so the conformance story here is entirely protocol- and registry-shaped.
+standards:
+- id: oai-pmh
+  conforms: true
+  evidence: >-
+    Two institution-operated OAI-PMH 2.0 endpoints answered verb=Identify with valid
+    OAI-PMH XML on 2026-09-01. BORIS Portal:
+    https://boris-portal.unibe.ch/server/oai/request?verb=Identify -> 200 text/xml,
+    repositoryName "BORIS Portal", protocolVersion 2.0, adminEmail borisportal@unibe.ch,
+    earliestDatestamp 2026-08-10T07:16:15Z, granularity YYYY-MM-DDThh:mm:ssZ,
+    deletedRecord transient. Bern Open Publishing:
+    https://bop.unibe.ch/index.php/index/oai?verb=Identify -> 200, repositoryName
+    "BOP Serials", protocolVersion 2.0, adminEmail bop-admin@ub.unibe.ch,
+    earliestDatestamp 2015-08-25T12:26:22Z, deletedRecord persistent. BORIS also answered
+    verb=ListMetadataFormats (200, 3,382 bytes).
+- id: shibboleth
+  conforms: true
+  evidence: >-
+    The University of Bern operates its own Shibboleth Identity Provider, published in the
+    SWITCHaai federation metadata aggregate
+    (https://metadata.aai.switch.ch/metadata.switchaai.xml, 200, 21,322,447 bytes,
+    1,957 EntityDescriptors). entityID https://aai-idp.unibe.ch/idp/shibboleth,
+    mdui:DisplayName "Universität Bern", shibmd:Scope unibe.ch. 53 entityIDs under
+    unibe.ch appear in the aggregate: 1 IDPSSODescriptor and 52 SPSSODescriptors,
+    including boris-portal.unibe.ch, boristheses.unibe.ch, exam.unibe.ch and the KSL
+    course-system service providers (id-kslprod1/2.id-sys.unibe.ch).
+- id: saml
+  conforms: true
+  evidence: >-
+    SAML 2.0 bindings declared on Bern's IdP entity in the SWITCHaai aggregate:
+    SingleSignOnService urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect and
+    urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST at
+    https://unibe.login.eduid.ch/idp/profile/SAML2/{Redirect,POST}/SSO (SSO delegated to
+    SWITCH edu-ID; the entity, its scope and its 52 service providers remain Bern's).
+    Independently observed in the wild: https://www.ksl.unibe.ch/ redirects anonymous
+    callers to the SWITCH WAYF discovery service carrying
+    entityID=https://id-kslprod2.id-sys.unibe.ch/shibboleth.
+- id: datacite
+  conforms: true
+  evidence: >-
+    https://api.datacite.org/providers/unibe -> 200. symbol UNIBE, name "University of
+    Bern", memberType direct_member, organizationType academicInstitution, country CH,
+    created 2020-04-06, rorId https://ror.org/02k7v4d05. Five DataCite repositories are
+    registered under the member: unibe.boris-portal ("Open Access CRIS of the University
+    of Bern"), unibe.bop-serials, unibe.cssl, unibe.dhkg, unibe.repo-phbern. This is a
+    registry MEMBERSHIP, not a Bern-operated contract.
+- id: orcid
+  conforms: false
+  evidence: >-
+    No Bern-operated ORCID integration was evidenced. https://pub.orcid.org/v3.0/search/
+    ?q=ror-org-id:"02k7v4d05" returned {"result":null,"num-found":0}, and no ORCID member
+    record or institutional ORCID connect service was found on a unibe.ch host.
+- id: crossref
+  conforms: false
+  evidence: >-
+    Bern registers DOIs through DataCite, not Crossref. The University Library's own APIs
+    guide lists Crossref as a THIRD-PARTY data source for text and data mining, not as a
+    Bern membership.
+- id: scim
+  conforms: false
+  evidence: No SCIM endpoint or SCIM claim found on any unibe.ch host; identity provisioning is not publicly documented.
+- id: lti
+  conforms: false
+  evidence: >-
+    No LTI tool-provider or platform registration is published. Bern's teaching platform
+    (ILIAS) and course system (KSL, https://www.unibe.ch/studies/student_starter_kit/tools/cts/index_eng.html
+    -> 200) are behind SWITCH AAI and publish no LTI configuration.
+- id: oneroster
+  conforms: false
+  evidence: No OneRoster endpoint or claim found; rostering is not exposed publicly.
+- id: ed-fi
+  conforms: false
+  evidence: Ed-Fi is a US K-12/state-agency standard; no Ed-Fi surface exists at a Swiss university.
+- id: caliper
+  conforms: false
+  evidence: No Caliper Analytics endpoint or claim found on any unibe.ch host.
+- id: qti
+  conforms: false
+  evidence: >-
+    exam.unibe.ch is registered as a SWITCHaai service provider but serves no public QTI
+    surface and no QTI claim is published.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    https://www.unibe.ch/.well-known/security.txt -> 200, 568 bytes, PGP SIGNED MESSAGE
+    (Hash: SHA256). Contact: https://www.unibesecure.unibe.ch/vorfaelle_melden/index_ger.html
+    and mailto:responsible-disclosure@unibe.ch, Expires 2026-09-30T22:00:00.000Z,
+    Encryption key referenced. Also served on https://www.ub.unibe.ch/.well-known/security.txt (200).
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI document is published on any University of Bern host. This repository holds
+    no openapi/ directory and none was fabricated.
+- id: llms-txt
+  conforms: false
+  evidence: https://www.unibe.ch/llms.txt -> 404 (UniBE error page).

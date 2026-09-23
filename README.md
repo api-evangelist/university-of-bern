@@ -64,56 +64,87 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Bern (Universität Bern), founded in 1834, is a comprehensive public research university in the Swiss capital with around 16,000 students across eight faculties, ranked #91 in the QS World University Rankings 2025. This repository catalogs its public, machine-readable developer/API footprint as an APIs.json profile.
+The University of Bern (Universität Bern), founded in 1834, is a comprehensive public research university in the Swiss capital with around 16,000 students across eight faculties. This repository catalogs its public, machine-readable footprint as an APIs.json profile, with an explicit operator attribution on every surface.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-bern/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-bern-api-evangelist&utm_content=repo
 
 ## Type
 
-Index / Consumer / 3rd-Party
+University / Public Research University · Index / Consumer / 3rd-Party
 
 ## Tags
 
-Education, Higher Education, University, Switzerland, Research, Open Access, Institutional Repository, Library
+University, Higher Education, Education, Switzerland, Public Research University, Research, Open Science, Open Access, Institutional Repository, Library, OAI-PMH, Identity Federation, Shibboleth, Research Computing, Scholarly Publishing
 
-## APIs
+## Surfaces, by operator
 
-- **BORIS Portal DSpace REST API** — Institutional repository and research information system on DSpace 7.6.1; HAL/JSON REST API exposing communities, collections, items, and CRIS research entities. Docs: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html — Base URL: https://boris-portal.unibe.ch/server/api
-- **BORIS Portal OAI-PMH Endpoint** — OAI-PMH 2.0 metadata harvesting for the University of Bern's research outputs. Docs: https://www.ub.unibe.ch/services/open_science/boris_portal/index_eng.html — Base URL: https://boris-portal.unibe.ch/server/oai/request
-- **University Library Data-Mining APIs Guide** — Curated library guidance on text-and-data-mining APIs (covers freely accessible and licensed third-party services). Docs: https://www.ub.unibe.ch/services/digital_scholarship/apis/index_eng.html
+A university is a federation of buyers, not an API producer. Every entry below carries an
+`x-operator` saying **who runs the thing it describes** — which is not the same question as who
+we fetched it from.
 
-## Plans
+### Institution-operated (6)
 
-See [plans/university-of-bern-plans-pricing.yml](plans/university-of-bern-plans-pricing.yml).
+- **BORIS Portal OAI-PMH Endpoint** — `https://boris-portal.unibe.ch/server/oai/request` — OAI-PMH 2.0, verified live 2026-09-01 (`repositoryName` "BORIS Portal", protocol 2.0, `adminEmail` borisportal@unibe.ch). The one path exempted from the access restriction on that host.
+- **BORIS Portal DSpace REST API — public access suspended** — `https://boris-portal.unibe.ch/server/api` — **not publicly callable.** Every anonymous request to the host returns HTTP 200 carrying a "Temporary Access Restriction" page: access "is currently granted exclusively to" the University of Bern network, the Inselspital network and university VPN.
+- **Bern Open Publishing (BOP Serials) OAI-PMH Endpoint** — `https://bop.unibe.ch/index.php/index/oai` — OJS 3.4.0.6, verified live, earliest datestamp 2015-08-25.
+- **Bern Open Publishing OJS REST API** — returns `api.403.unauthorized` without a library-issued token.
+- **University Library Public Services Status API** — Upptime, per-service JSON under `ub-unibe-ch/ub-public-services-status`. The only fully open machine-readable HTTP API in this profile.
+- **University Library IIIF Image Server** — `https://iiif.ub.unibe.ch/` — live; IIIF API level and version deliberately not asserted (no manifest resolvable without an object id).
 
-## Rate Limits
+### Federation (1)
 
-See [rate-limits/university-of-bern-rate-limits.yml](rate-limits/university-of-bern-rate-limits.yml).
+- **SWITCHaai — University of Bern IdP** — `entityID https://aai-idp.unibe.ch/idp/shibboleth`, scope `unibe.ch`. 53 unibe.ch entities in the SWITCHaai aggregate: 1 IdP and 52 service providers.
 
-## FinOps
+### Registry (2)
 
-See [finops/university-of-bern-finops.yml](finops/university-of-bern-finops.yml).
+- **DataCite membership** — symbol `UNIBE`, `direct_member` since 2020-04-06, 5 registered repositories.
+- **ROR record** — `https://ror.org/02k7v4d05`.
+
+### Tenant (1)
+
+- **swisscovery — University Library of Bern tenant view** — `https://ubbern.swisscovery.slsp.ch` (CNAME → `slsp-ube.primo.exlibrisgroup.com`). Ex Libris Primo VE via SLSP. The relationship is Bern's; the contract is Ex Libris's and is **not** saved here.
+
+## Coverage
+
+`gated` / `auth_required`. Bern's open surfaces are harvesting protocols and registry memberships;
+every REST surface it operates is closed to anonymous callers. There is no developer portal, no
+OpenAPI, and no `llms.txt` on any unibe.ch host. This is a correct thin profile, not a failed crawl.
+
+## Conformance
+
+See [conformance/university-of-bern-conformance.yml](conformance/university-of-bern-conformance.yml)
+— `education`-regime standards probed live. Conforming: **oai-pmh**, **shibboleth**, **saml**,
+**datacite**, plus RFC 9116 `security.txt`. Not conforming: orcid, crossref, scim, lti, oneroster,
+ed-fi, caliper, qti, openapi, llms.txt.
+
+## Plans / Rate Limits / FinOps
+
+See [plans/](plans/university-of-bern-plans-pricing.yml), [rate-limits/](rate-limits/university-of-bern-rate-limits.yml), [finops/](finops/university-of-bern-finops.yml).
 
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
-
-## Common Properties
-
-- Website: https://www.unibe.ch/index_eng.html
-- GitHub (IT-Services): https://github.com/id-unibe-ch
-- Source Code (University Library): https://github.com/ub-unibe-ch
-- LinkedIn: https://www.linkedin.com/school/university-of-bern/
-- Plans: plans/university-of-bern-plans-pricing.yml
-- Rate Limits: rate-limits/university-of-bern-rate-limits.yml
-- FinOps: finops/university-of-bern-finops.yml
-- Review: review.yml
+- Modified: 2026-09-01
 
 ## Notes
 
-All entries were verified live on 2026-06-03 with no fabrication. The University of Bern does not operate a single unified self-service developer portal. The strongest confirmed machine-readable surface is BORIS Portal (DSpace 7.6.1): both its REST API (`/server/api`) and OAI-PMH endpoint (`/server/oai/request`) returned HTTP 200. The University Library APIs page documents third-party data-mining services rather than University-of-Bern-operated APIs. Course/SIS (KSL) and identity systems are gated behind institutional affiliation and Swiss federated identity (SWITCH edu-ID / Shibboleth) and are not cataloged as public APIs. The IWI Open Data Show Room (opendata.iwi.unibe.ch) did not resolve at review time.
+Re-profiled 2026-09-01 under the API Evangelist university pipeline, which settles operator
+attribution before saving anything. No OpenAPI or other contract is saved in this repository,
+because the University of Bern publishes none — nothing was fabricated or derived to fill the gap.
+
+Two corrections to the 2026-06-03 profile:
+
+1. The BORIS Portal DSpace REST API was recorded as "confirmed live returning HTTP 200". It is
+   not: the host serves a 2,920-byte soft-200 "Access Restricted" page to the entire public. That
+   was a soft-200 false credit and is corrected.
+2. The "University Library Data-Mining APIs Guide" was listed as one of three APIs. It is a
+   curated guide to **other organizations'** APIs (OpenAlex, Crossref, Scopus, Elsevier, IEEE,
+   Springer Nature, Wiley) and describes nothing Bern operates. It has been demoted from `apis[]`
+   to a `Documentation` pointer.
+
+`opendata.iwi.unibe.ch` still does not resolve (DNS failure) and remains uncatalogued. Course and
+identity systems (KSL, ILIAS, exam.unibe.ch) are behind SWITCH AAI and expose no public API.
 
 ## Maintainers
 
