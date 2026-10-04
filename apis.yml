@@ -29,15 +29,19 @@ description: >-
 type: Index
 deliveryModel:
   model: saas
-  open_source: false
-  commercial: false
-  callable_host: true
-  label: Institution-operated endpoints · harvesting protocols only
-  confidence: high
+  license_evidence:
+    not_product:
+    - ub-unibe-ch/ub-public-services-status
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
   source:
-  - probed
-  generated: '2026-09-01'
-  method: probed
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 accessModel:
   pricing: free
   onboarding: none
